@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Laundry Services</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
+  <!-- Simple navbar with section links -->
   <header class="header">
     <div class="container nav">
       <div class="logo">Logo</div>
@@ -23,17 +24,24 @@
   </header>
 
   <main>
+    <!-- Hero section with CTA -->
     <section class="hero container" id="home">
       <div class="hero-left">
         <h1>Revitalize Your Clothes with Expert Laundry Services!</h1>
-        <p>From dry cleaning to stain removal, we make it easy to book your laundry service and keep your clothes fresh.</p>
-        <button id="scrollBtn" class="primary-btn">Book a Service Today</button>
+        <p>
+          From dry cleaning to stain removal, we make it easy to book your laundry service and keep your clothes fresh.
+        </p>
+        <button id="scrollBtn" class="primary-btn" type="button">Book a Service Today</button>
       </div>
       <div class="hero-right">
-        <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=900&q=80" alt="Laundry machine">
+        <img
+          src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=900&q=80"
+          alt="Laundry machine"
+        />
       </div>
     </section>
 
+    <!-- Achievements strip -->
     <section class="achievements">
       <div class="container achievement-box">
         <h2>Our Achievements</h2>
@@ -45,6 +53,7 @@
       </div>
     </section>
 
+    <!-- Main booking area: services + cart/form -->
     <section class="container booking-section" id="services">
       <div class="services-box">
         <h2>Our Services</h2>
@@ -67,16 +76,18 @@
         <div class="form-box">
           <h3>Book Now</h3>
           <form id="bookingForm">
-            <input type="text" id="fullName" placeholder="Full Name" required>
-            <input type="email" id="emailId" placeholder="Email ID" required>
-            <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
+            <input type="text" id="fullName" placeholder="Full Name" required />
+            <input type="email" id="emailId" placeholder="Email ID" required />
+            <input type="tel" id="phoneNumber" placeholder="Phone Number" required />
             <button type="submit" class="primary-btn">Book Now</button>
           </form>
-          <p id="bookingMessage"></p>
+          <p id="formError" class="form-error"></p>
+          <p id="bookingMessage" class="booking-message"></p>
         </div>
       </div>
     </section>
 
+    <!-- Quality cards -->
     <section class="container quality-section" id="about">
       <h2>Quality Description</h2>
       <div class="quality-grid">
@@ -99,6 +110,7 @@
       </div>
     </section>
 
+    <!-- Newsletter form -->
     <section class="newsletter">
       <div class="container newsletter-box">
         <div>
@@ -106,14 +118,15 @@
           <p>Stay updated with offers and laundry tips.</p>
         </div>
         <form id="newsletterForm">
-          <input type="text" placeholder="Full name" required>
-          <input type="email" placeholder="Email" required>
+          <input type="text" placeholder="Full name" required />
+          <input type="email" placeholder="Email" required />
           <button type="submit" class="secondary-btn">Subscribe</button>
         </form>
       </div>
     </section>
   </main>
 
+  <!-- Footer links -->
   <footer class="footer" id="contact">
     <div class="container footer-grid">
       <div>
