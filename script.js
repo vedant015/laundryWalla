@@ -57,14 +57,12 @@ function showCart() {
   let total = 0;
 
   for (let i = 0; i < cart.length; i++) {
-    const name = cart[i];
-    const service = services.find(function (item) {
-      return item.name === name;
-    });
-
-    if (service) {
-      total = total + service.price;
-      html += `<li><span>${service.name}</span><span>₹${service.price}.00</span></li>`;
+    for (let j = 0; j < services.length; j++) {
+      if (services[j].name === cart[i]) {
+        total = total + services[j].price;
+        html += `<li><span>${services[j].name}</span><span>₹${services[j].price}.00</span></li>`;
+        break;
+      }
     }
   }
 
@@ -90,14 +88,30 @@ function toggleService(index) {
 
 // Check if email looks normal.
 function validEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+  if (email.indexOf("@") === -1) {
+    return false;
+  }
+
+  if (email.indexOf(".") === -1) {
+    return false;
+  }
+
+  return email.indexOf("@") < email.lastIndexOf(".");
 }
 
 // Phone number should be 10 digits only.
 function validPhone(phone) {
-  const phoneRegex = /^\d{10}$/;
-  return phoneRegex.test(phone);
+  if (phone.length !== 10) {
+    return false;
+  }
+
+  for (let i = 0; i < phone.length; i++) {
+    if (phone[i] < "0" || phone[i] > "9") {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 // This makes one text string for the booking email.
@@ -106,16 +120,16 @@ function getServiceSummary() {
   let total = 0;
 
   for (let i = 0; i < cart.length; i++) {
-    const item = services.find(function (service) {
-      return service.name === cart[i];
-    });
+    for (let j = 0; j < services.length; j++) {
+      if (services[j].name === cart[i]) {
+        total = total + services[j].price;
+        text += services[j].name + " - ₹" + services[j].price + ".00";
 
-    if (item) {
-      total = total + item.price;
-      text += item.name + " - ₹" + item.price + ".00";
+        if (i < cart.length - 1) {
+          text += ", ";
+        }
 
-      if (i < cart.length - 1) {
-        text += ", ";
+        break;
       }
     }
   }
@@ -128,16 +142,15 @@ function getServiceSummary() {
 
 // Show a message below the form.
 function setBookingMessage(text, isError) {
+  bookingMessage.className = "booking-message";
   bookingMessage.textContent = text;
-  bookingMessage.classList.remove("show", "error");
+  if (text !== "") {
+    bookingMessage.classList.add("show");
+  }
 
   if (isError) {
     bookingMessage.classList.add("error");
   }
-
-  setTimeout(function () {
-    bookingMessage.classList.add("show");
-  }, 20);
 }
 
 // Scroll down to the booking section when the top button is clicked.
@@ -181,12 +194,12 @@ bookingForm.addEventListener("submit", function (event) {
     total_amount: "₹" + summary.total + ".00"
   };
 
-  const hasKeys =
+  if (
+    window.emailjs &&
     EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY" &&
     EMAILJS_SERVICE_ID !== "YOUR_SERVICE_ID" &&
-    EMAILJS_TEMPLATE_ID !== "YOUR_TEMPLATE_ID";
-
-  if (window.emailjs && hasKeys) {
+    EMAILJS_TEMPLATE_ID !== "YOUR_TEMPLATE_ID"
+  ) {
     emailjs.init(EMAILJS_PUBLIC_KEY);
 
     emailjs
@@ -195,7 +208,7 @@ bookingForm.addEventListener("submit", function (event) {
         setBookingMessage("Thank you for booking. We will contact you soon.", false);
       })
       .catch(function () {
-        setBookingMessage("Booking saved, but email was not sent.", true);
+        setBookingMessage("Booking saved, but email not sent", true);
       });
   } else {
     setBookingMessage("Thank you for booking. We will contact you soon.", false);
@@ -207,7 +220,7 @@ bookingForm.addEventListener("submit", function (event) {
   showCart();
 });
 
-// Newsletter form just shows a small alert.
+// Newsletter form for simple interaction.
 newsletterForm.addEventListener("submit", function (event) {
   event.preventDefault();
   alert("Thanks for subscribing!");
